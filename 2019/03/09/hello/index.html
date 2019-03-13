@@ -79,16 +79,23 @@
 
 
 
-<meta name="description" content="Computer Science">
-<meta property="og:type" content="website">
-<meta property="og:title" content="davine">
-<meta property="og:url" content="http://www.davine.tech/index.html">
+<meta name="description" content="关键词：访存指令 推测执行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="访存指令推测执行模块介绍">
+<meta property="og:url" content="http://www.davine.tech/2019/03/09/hello/index.html">
 <meta property="og:site_name" content="davine">
-<meta property="og:description" content="Computer Science">
+<meta property="og:description" content="关键词：访存指令 推测执行">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E9%A2%91%E7%8E%87%E8%A1%A8.png">
+<meta property="og:image" content="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/LW%E5%9C%A8%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E5%8F%91%E7%94%9F%E7%9B%B8%E5%85%B3%E6%80%A7%E7%9A%84%E6%A6%82%E7%8E%87.png">
+<meta property="og:image" content="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/SW%E5%9C%A8%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E5%8F%91%E7%94%9F%E7%9B%B8%E5%85%B3%E6%80%A7%E7%9A%84%E6%A6%82%E7%8E%87.png">
+<meta property="og:image" content="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E8%AE%BF%E5%AD%98%E6%8C%87%E4%BB%A4%E6%8E%A8%E6%B5%8B%E6%89%A7%E8%A1%8C.png">
+<meta property="og:image" content="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E6%8E%A8%E6%B5%8B%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9D%97.jpg">
+<meta property="og:updated_time" content="2019-03-13T02:42:09.925Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="davine">
-<meta name="twitter:description" content="Computer Science">
+<meta name="twitter:title" content="访存指令推测执行模块介绍">
+<meta name="twitter:description" content="关键词：访存指令 推测执行">
+<meta name="twitter:image" content="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E9%A2%91%E7%8E%87%E8%A1%A8.png">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://www.davine.tech/">
+  <link rel="canonical" href="http://www.davine.tech/2019/03/09/hello/">
 
 
 
 
 
-  <title>davine</title>
+  <title>访存指令推测执行模块介绍 | davine</title>
   
 
 
@@ -143,8 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -249,9 +255,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -281,9 +287,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/09/hello/" itemprop="url">访存指令推测执行模块介绍</a></h1>
+          <h1 class="post-title" itemprop="name headline">访存指令推测执行模块介绍</h1>
         
 
         <div class="post-meta">
@@ -333,16 +337,22 @@
       
 
       
-        
-          <p><center><font size="5">关键词：访存指令 推测执行</font></center></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/09/hello/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p><center><font size="5">关键词：访存指令 推测执行</font></center></p>
+<a id="more"></a>
+<hr>
+<h2 id="访存指令推测执行模块简介"><a href="#访存指令推测执行模块简介" class="headerlink" title="访存指令推测执行模块简介"></a><center>访存指令推测执行模块简介</center></h2><h2 id="在本项目的设计中，采用超标量流水线技术的性能目标是获得最大的指令吞吐率。访存指令推测执行模块主要加速了处理器中存储器数据流的流动。存储指令的来源主要是高级程序设计语言中对内存进行存储操作，比如声明一个固定大小的数组，然后对这个数组赋初值，或取出数组中的某一个值，并对该值进行运算后在存回数组。这些动作都有可能产生大量的LW和SW指令，而对不同数据结构的使用，也会影响LW-SW指令的产生，如下图所示，测试程序为SPEC95对内存中不同数据结构的访问频率。"><a href="#在本项目的设计中，采用超标量流水线技术的性能目标是获得最大的指令吞吐率。访存指令推测执行模块主要加速了处理器中存储器数据流的流动。存储指令的来源主要是高级程序设计语言中对内存进行存储操作，比如声明一个固定大小的数组，然后对这个数组赋初值，或取出数组中的某一个值，并对该值进行运算后在存回数组。这些动作都有可能产生大量的LW和SW指令，而对不同数据结构的使用，也会影响LW-SW指令的产生，如下图所示，测试程序为SPEC95对内存中不同数据结构的访问频率。" class="headerlink" title="在本项目的设计中，采用超标量流水线技术的性能目标是获得最大的指令吞吐率。访存指令推测执行模块主要加速了处理器中存储器数据流的流动。存储指令的来源主要是高级程序设计语言中对内存进行存储操作，比如声明一个固定大小的数组，然后对这个数组赋初值，或取出数组中的某一个值，并对该值进行运算后在存回数组。这些动作都有可能产生大量的LW和SW指令，而对不同数据结构的使用，也会影响LW,SW指令的产生，如下图所示，测试程序为SPEC95对内存中不同数据结构的访问频率。"></a><font size="4">在本项目的设计中，采用超标量流水线技术的性能目标是获得最大的指令吞吐率。访存指令推测执行模块主要加速了处理器中存储器数据流的流动。存储指令的来源主要是高级程序设计语言中对内存进行存储操作，比如声明一个固定大小的数组，然后对这个数组赋初值，或取出数组中的某一个值，并对该值进行运算后在存回数组。这些动作都有可能产生大量的LW和SW指令，而对不同数据结构的使用，也会影响LW,SW指令的产生，如下图所示，测试程序为SPEC95对内存中不同数据结构的访问频率。</font></h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E5%AD%98%E5%82%A8%E8%AE%BF%E9%97%AE%E9%A2%91%E7%8E%87%E8%A1%A8.png" alt="不同数据结构访问频率表"></h2><h2 id="通过上图可以看出，发生过LW的数据区以后很大概率也会发生SW，相对地，发生过SW后也会有很大几率发生LW。接下来的一种分析方法是采用LW或SW指令自身为主角，观察它们在不同数据结构中发生RAR-RAW-WAW-WAR的概率是多少，如下图所示。"><a href="#通过上图可以看出，发生过LW的数据区以后很大概率也会发生SW，相对地，发生过SW后也会有很大几率发生LW。接下来的一种分析方法是采用LW或SW指令自身为主角，观察它们在不同数据结构中发生RAR-RAW-WAW-WAR的概率是多少，如下图所示。" class="headerlink" title="通过上图可以看出，发生过LW的数据区以后很大概率也会发生SW，相对地，发生过SW后也会有很大几率发生LW。接下来的一种分析方法是采用LW或SW指令自身为主角，观察它们在不同数据结构中发生RAR,RAW,WAW,WAR的概率是多少，如下图所示。"></a><font size="4">通过上图可以看出，发生过LW的数据区以后很大概率也会发生SW，相对地，发生过SW后也会有很大几率发生LW。接下来的一种分析方法是采用LW或SW指令自身为主角，观察它们在不同数据结构中发生RAR,RAW,WAW,WAR的概率是多少，如下图所示。</font></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/LW%E5%9C%A8%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E5%8F%91%E7%94%9F%E7%9B%B8%E5%85%B3%E6%80%A7%E7%9A%84%E6%A6%82%E7%8E%87.png" alt="LW在不同数据结构中发生相关性的概率"></h2><h2 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/SW%E5%9C%A8%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E5%8F%91%E7%94%9F%E7%9B%B8%E5%85%B3%E6%80%A7%E7%9A%84%E6%A6%82%E7%8E%87.png" alt="SW在不同数据结构中发生相关性的概率"></h2><h2 id="图中第一列如099的数字表示在SPEC95中不同的测试程序。通过上图我们可以看出，存储指令发生数据相关的可能是非常高的，最高的甚至达到了93-！所以合理的调度访存指令并推测执行是很有必要的。我们使用的一种方案是通过MDST和MDPT来识别出具有RAW的LW指令，避免推测执行后发生访问顺序上的违例以影响性能。MDST和MDPT表如下图所示。"><a href="#图中第一列如099的数字表示在SPEC95中不同的测试程序。通过上图我们可以看出，存储指令发生数据相关的可能是非常高的，最高的甚至达到了93-！所以合理的调度访存指令并推测执行是很有必要的。我们使用的一种方案是通过MDST和MDPT来识别出具有RAW的LW指令，避免推测执行后发生访问顺序上的违例以影响性能。MDST和MDPT表如下图所示。" class="headerlink" title="图中第一列如099的数字表示在SPEC95中不同的测试程序。通过上图我们可以看出，存储指令发生数据相关的可能是非常高的，最高的甚至达到了93%！所以合理的调度访存指令并推测执行是很有必要的。我们使用的一种方案是通过MDST和MDPT来识别出具有RAW的LW指令，避免推测执行后发生访问顺序上的违例以影响性能。MDST和MDPT表如下图所示。"></a><font size="4">图中第一列如099的数字表示在SPEC95中不同的测试程序。通过上图我们可以看出，存储指令发生数据相关的可能是非常高的，最高的甚至达到了93%！所以合理的调度访存指令并推测执行是很有必要的。我们使用的一种方案是通过MDST和MDPT来识别出具有RAW的LW指令，避免推测执行后发生访问顺序上的违例以影响性能。MDST和MDPT表如下图所示。</font></h2><h2 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E8%AE%BF%E5%AD%98%E6%8C%87%E4%BB%A4%E6%8E%A8%E6%B5%8B%E6%89%A7%E8%A1%8C.png" alt="MDPT/MDST表"></h2><h2 id="在本次设计中，我们主要解决了高级程序设计语言中，循环展开后产生的动态数据依赖，考虑以下代码段。"><a href="#在本次设计中，我们主要解决了高级程序设计语言中，循环展开后产生的动态数据依赖，考虑以下代码段。" class="headerlink" title="在本次设计中，我们主要解决了高级程序设计语言中，循环展开后产生的动态数据依赖，考虑以下代码段。"></a><font size="4">在本次设计中，我们主要解决了高级程序设计语言中，循环展开后产生的动态数据依赖，考虑以下代码段。</font></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(i=0;i&lt;n;i++)</span><br><span class="line">  a[i+c]=a[i]+k;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="循环在执行时，每次都会先取出a-i-中的数据，加上常量k后，再存入a-i-c-中，此时便会发生在不同次的循环迭代间，发生大量数据冲突，因为我们是要提前推测执行LW，所以不采取措施会发生大量的违例错误，从而大大降低了性能，汇编代码如下。"><a href="#循环在执行时，每次都会先取出a-i-中的数据，加上常量k后，再存入a-i-c-中，此时便会发生在不同次的循环迭代间，发生大量数据冲突，因为我们是要提前推测执行LW，所以不采取措施会发生大量的违例错误，从而大大降低了性能，汇编代码如下。" class="headerlink" title="循环在执行时，每次都会先取出a[i]中的数据，加上常量k后，再存入a[i+c]中，此时便会发生在不同次的循环迭代间，发生大量数据冲突，因为我们是要提前推测执行LW，所以不采取措施会发生大量的违例错误，从而大大降低了性能，汇编代码如下。"></a><font size="4">循环在执行时，每次都会先取出a[i]中的数据，加上常量k后，再存入a[i+c]中，此时便会发生在不同次的循环迭代间，发生大量数据冲突，因为我们是要提前推测执行LW，所以不采取措施会发生大量的违例错误，从而大大降低了性能，汇编代码如下。</font></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lw1 $t2,0($t1)</span><br><span class="line">addi $t3,$t2,k</span><br><span class="line">sw1 $t3,0($t1)</span><br><span class="line">lw2 $t2,0($t1)</span><br><span class="line">addi $t3,$t2,k</span><br><span class="line">sw2 $t2,0($t1)</span><br><span class="line">lw3 $t3,0($t1)</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="从以上代码中可以看出，sw1与lw2，sw2与lw3有着数据冲突，所以贸然将lw指令提前执行是不可取的，于是我们采用两个表加上一个预测器来完成对lw-sw指令对的配对以及后续指令的推测，配对过程叫做synchronizes。执行过程如下图所示。"><a href="#从以上代码中可以看出，sw1与lw2，sw2与lw3有着数据冲突，所以贸然将lw指令提前执行是不可取的，于是我们采用两个表加上一个预测器来完成对lw-sw指令对的配对以及后续指令的推测，配对过程叫做synchronizes。执行过程如下图所示。" class="headerlink" title="从以上代码中可以看出，sw1与lw2，sw2与lw3有着数据冲突，所以贸然将lw指令提前执行是不可取的，于是我们采用两个表加上一个预测器来完成对lw,sw指令对的配对以及后续指令的推测，配对过程叫做synchronizes。执行过程如下图所示。"></a><font size="4">从以上代码中可以看出，sw1与lw2，sw2与lw3有着数据冲突，所以贸然将lw指令提前执行是不可取的，于是我们采用两个表加上一个预测器来完成对lw,sw指令对的配对以及后续指令的推测，配对过程叫做synchronizes。执行过程如下图所示。</font></h2><h2 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="https://davine-blog.oss-cn-beijing.aliyuncs.com/blog/%E6%8E%A8%E6%B5%8B%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9D%97.jpg" alt="推测执行机制"></h2><p><font size="4">1.  将发生违例的LW，SW指令对填入MDPT表项</font></p>
+<p><font size="4">2.  将表项V置为1，表示该表项已被占用</font></p>
+<p><font size="4">3.  将违例的LW2,SW1的PC值相减，得出DIST并填入表项</font></p>
+<p><font size="4">4.  下条LW3执行时，首先访问MDPT，并未找出和它地址相同的LW</font></p>
+<p><font size="4">5.  读取Memory speculation predictor，并将F/E置为0</font></p>
+<p><font size="4">6.  预测结果被分配MDST，延迟执行</font></p>
+<p><font size="4">7.  SW2执行时和MDPT表项中DIST相加，得出LW3的指令地址，并与LDPC比较</font></p>
+<p><font size="4">8.  将SW2写入MDST，完成LW与SW的配对，并将F/E置为1，此后LW3可以自由执行</font></p>
+<h2 id="-5"><a href="#-5" class="headerlink" title=""></a><font size="4"></font></h2>
       
     </div>
     
@@ -359,12 +369,12 @@
       
 
       
+      
+      
 
       
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -374,10 +384,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -385,6 +396,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -405,8 +420,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -448,6 +472,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#访存指令推测执行模块简介"><span class="nav-number">1.</span> <span class="nav-text">访存指令推测执行模块简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在本项目的设计中，采用超标量流水线技术的性能目标是获得最大的指令吞吐率。访存指令推测执行模块主要加速了处理器中存储器数据流的流动。存储指令的来源主要是高级程序设计语言中对内存进行存储操作，比如声明一个固定大小的数组，然后对这个数组赋初值，或取出数组中的某一个值，并对该值进行运算后在存回数组。这些动作都有可能产生大量的LW和SW指令，而对不同数据结构的使用，也会影响LW-SW指令的产生，如下图所示，测试程序为SPEC95对内存中不同数据结构的访问频率。"><span class="nav-number">2.</span> <span class="nav-text">在本项目的设计中，采用超标量流水线技术的性能目标是获得最大的指令吞吐率。访存指令推测执行模块主要加速了处理器中存储器数据流的流动。存储指令的来源主要是高级程序设计语言中对内存进行存储操作，比如声明一个固定大小的数组，然后对这个数组赋初值，或取出数组中的某一个值，并对该值进行运算后在存回数组。这些动作都有可能产生大量的LW和SW指令，而对不同数据结构的使用，也会影响LW,SW指令的产生，如下图所示，测试程序为SPEC95对内存中不同数据结构的访问频率。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过上图可以看出，发生过LW的数据区以后很大概率也会发生SW，相对地，发生过SW后也会有很大几率发生LW。接下来的一种分析方法是采用LW或SW指令自身为主角，观察它们在不同数据结构中发生RAR-RAW-WAW-WAR的概率是多少，如下图所示。"><span class="nav-number">4.</span> <span class="nav-text">通过上图可以看出，发生过LW的数据区以后很大概率也会发生SW，相对地，发生过SW后也会有很大几率发生LW。接下来的一种分析方法是采用LW或SW指令自身为主角，观察它们在不同数据结构中发生RAR,RAW,WAW,WAR的概率是多少，如下图所示。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-2"><span class="nav-number">6.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图中第一列如099的数字表示在SPEC95中不同的测试程序。通过上图我们可以看出，存储指令发生数据相关的可能是非常高的，最高的甚至达到了93-！所以合理的调度访存指令并推测执行是很有必要的。我们使用的一种方案是通过MDST和MDPT来识别出具有RAW的LW指令，避免推测执行后发生访问顺序上的违例以影响性能。MDST和MDPT表如下图所示。"><span class="nav-number">7.</span> <span class="nav-text">图中第一列如099的数字表示在SPEC95中不同的测试程序。通过上图我们可以看出，存储指令发生数据相关的可能是非常高的，最高的甚至达到了93%！所以合理的调度访存指令并推测执行是很有必要的。我们使用的一种方案是通过MDST和MDPT来识别出具有RAW的LW指令，避免推测执行后发生访问顺序上的违例以影响性能。MDST和MDPT表如下图所示。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-3"><span class="nav-number">8.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在本次设计中，我们主要解决了高级程序设计语言中，循环展开后产生的动态数据依赖，考虑以下代码段。"><span class="nav-number">9.</span> <span class="nav-text">在本次设计中，我们主要解决了高级程序设计语言中，循环展开后产生的动态数据依赖，考虑以下代码段。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环在执行时，每次都会先取出a-i-中的数据，加上常量k后，再存入a-i-c-中，此时便会发生在不同次的循环迭代间，发生大量数据冲突，因为我们是要提前推测执行LW，所以不采取措施会发生大量的违例错误，从而大大降低了性能，汇编代码如下。"><span class="nav-number">10.</span> <span class="nav-text">循环在执行时，每次都会先取出a[i]中的数据，加上常量k后，再存入a[i+c]中，此时便会发生在不同次的循环迭代间，发生大量数据冲突，因为我们是要提前推测执行LW，所以不采取措施会发生大量的违例错误，从而大大降低了性能，汇编代码如下。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从以上代码中可以看出，sw1与lw2，sw2与lw3有着数据冲突，所以贸然将lw指令提前执行是不可取的，于是我们采用两个表加上一个预测器来完成对lw-sw指令对的配对以及后续指令的推测，配对过程叫做synchronizes。执行过程如下图所示。"><span class="nav-number">11.</span> <span class="nav-text">从以上代码中可以看出，sw1与lw2，sw2与lw3有着数据冲突，所以贸然将lw指令提前执行是不可取的，于是我们采用两个表加上一个预测器来完成对lw,sw指令对的配对以及后续指令的推测，配对过程叫做synchronizes。执行过程如下图所示。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-4"><span class="nav-number">12.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-5"><span class="nav-number">13.</span> <span class="nav-text"></span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -581,6 +621,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
